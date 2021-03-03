@@ -1,13 +1,13 @@
 const db = require("../../data/db-config")
 
-/*
+/*===========================================================
   If `scheme_id` does not exist in the database:
 
   status 404
   {
     "message": "scheme with scheme_id <actual id> not found"
   }
-*/
+==============================================================*/
 const checkSchemeId = (req, res, next) => {
    const id = req.params.scheme_id
    db("schemes")
@@ -16,30 +16,38 @@ const checkSchemeId = (req, res, next) => {
             if(foundScheme[0]) {
                next()
             }else{
-               return res.status(404).json({ message: "scheme with scheme_id <actual id> not found" }) 
+               return res.status(404).json(
+                  { message: "scheme with scheme_id <actual id> not found" }
+               ) 
             }
          })
          .catch( err => {
-            return res.status(404).json({ message: "scheme with scheme_id <actual id> not found" }) 
+            return res.status(404).json(
+               { message: "scheme with scheme_id <actual id> not found" }
+            ) 
          })
 }
 
-/*
+/*===============================================================
   If `scheme_name` is missing, empty string or not a string:
 
   status 400
   {
     "message": "invalid scheme_name"
   }
-*/
+=================================================================*/
 const validateScheme = (req, res, next) => {
-   if(!req.body.scheme_name){
+
+   const checkName = req.body.scheme_name
+
+   if(!checkName || checkName === "" || typeof(checkName) !== "string" ){
       return res.status(400).json({message: "invalid scheme_name" })
    }
+
    next()
 }
 
-/*
+/*==============================================================
   If `instructions` is missing, empty string or not a string, or
   if `step_number` is not a number or is smaller than one:
 
@@ -47,9 +55,12 @@ const validateScheme = (req, res, next) => {
   {
     "message": "invalid step"
   }
-*/
+================================================================*/
 const validateStep = (req, res, next) => {
-   if(!req.body.instructions){
+
+   const checkInst = req.body.instructions 
+
+   if(!checkInst || checkInst === "" || typeof(checkInst) !== "string" ){
       return res.status(400).json({message: "invalid step" })
    }
    if( (req.body.step_number < 1) || (typeof(req.body.step_number) !== 'number')){

@@ -6,7 +6,7 @@ function find() { // EXERCISE A
       .select("sc.*")
       .groupBy("sc.scheme_id")
       .orderBy("sc.scheme_id ", "asc")
-  /*
+  /*======================================================================================
     1A- Study the SQL query below running it in SQLite Studio against `data/schemes.db3`.
     What happens if we change from a LEFT join to an INNER join?
 
@@ -21,7 +21,7 @@ function find() { // EXERCISE A
 
     2A- When you have a grasp on the query go ahead and build it in Knex.
     Return from this function the resulting dataset.
-  */
+   ======================================================================================*/
 }
 
 function findById(scheme_id) { // EXERCISE B
@@ -31,7 +31,7 @@ function findById(scheme_id) { // EXERCISE B
       .where( "sc.scheme_id", scheme_id )
       .orderBy("st.step_number", "asc")
 
-  /*
+  /*======================================================================================
     1B- Study the SQL query below running it in SQLite Studio against `data/schemes.db3`:
 
       SELECT
@@ -94,7 +94,7 @@ function findById(scheme_id) { // EXERCISE B
         "scheme_name": "Have Fun!",
         "steps": []
       }
-  */
+   ======================================================================================*/
 }
 
 function findSteps(scheme_id) { // EXERCISE C
@@ -104,7 +104,7 @@ function findSteps(scheme_id) { // EXERCISE C
       .where("sch.scheme_id", scheme_id)
       .select( "stp.step_id","stp.step_number", "sch.scheme_name", "stp.instructions" )
       .orderBy("stp.step_number")
-  /*
+  /*======================================================================================
     1C- Build a query in Knex that returns the following data.
     The steps should be sorted by step_number, and the array
     should be empty if there are no steps for the scheme:
@@ -123,7 +123,7 @@ function findSteps(scheme_id) { // EXERCISE C
           "scheme_name": "Get Rich Quick"
         }
       ]
-  */
+   ======================================================================================*/
 }
 
 function add(scheme) { // EXERCISE D
@@ -133,9 +133,9 @@ function add(scheme) { // EXERCISE D
          return findById(id[0])
       })
       .catch(err => console.log(err))
-  /*
+  /*======================================================================================
     1D- This function creates a new scheme and resolves to _the newly created scheme_.
-  */
+   ======================================================================================*/
 }
 
 function addStep(scheme_id, step, req) { // EXERCISE E
@@ -144,14 +144,14 @@ function addStep(scheme_id, step, req) { // EXERCISE E
       "step_number":step.step_number,
       "instructions":step.instructions
    }
-   
+
    return db("steps").insert(newStep)
      
-  /*
+  /*======================================================================================
     1E- This function adds a step to the scheme with the given `scheme_id`
     and resolves to _all the steps_ belonging to the given `scheme_id`,
     including the newly created one.
-  */
+   ======================================================================================*/
 }
 
 module.exports = {

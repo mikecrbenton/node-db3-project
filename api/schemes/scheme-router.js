@@ -5,7 +5,7 @@ const Schemes = require('./scheme-model.js')
 
 const router = express.Router()
 
-/**
+/*===================================================================================
   [GET] /api/schemes
 
   response:
@@ -22,7 +22,7 @@ const router = express.Router()
     },
     // etc
   ]
- */
+======================================================================================*/
 router.get('/', (req, res, next) => {
   Schemes.find()
     .then(schemes => {
@@ -31,7 +31,7 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-/*
+/*===================================================================================
   [GET] /api/schemes/2
 
   response:
@@ -51,7 +51,7 @@ router.get('/', (req, res, next) => {
       }
     ]
   }
-*/
+======================================================================================*/
 router.get('/:scheme_id', checkSchemeId, (req, res, next) => {
   const { scheme_id } = req.params
 
@@ -62,7 +62,7 @@ router.get('/:scheme_id', checkSchemeId, (req, res, next) => {
     .catch(next)
 })
 
-/*
+/*===================================================================================
   [GET] /api/schemes/2/steps
 
   response:
@@ -80,7 +80,7 @@ router.get('/:scheme_id', checkSchemeId, (req, res, next) => {
       "scheme_name": "Get Rich Quick"
     }
   ]
-*/
+   ======================================================================================*/
 router.get('/:scheme_id/steps', checkSchemeId, (req, res, next) => {
   const { scheme_id } = req.params
 
@@ -91,7 +91,7 @@ router.get('/:scheme_id/steps', checkSchemeId, (req, res, next) => {
     .catch(next)
 })
 
-/*
+/*===================================================================================
   [POST] /api/schemes { "scheme_name": "Take Ovah" }
 
   response:
@@ -99,7 +99,7 @@ router.get('/:scheme_id/steps', checkSchemeId, (req, res, next) => {
     "scheme_id": 8,
     "scheme_name": "Take Ovah"
   }
-*/
+   ======================================================================================*/
 router.post('/', validateScheme, (req, res, next) => {
   const scheme = req.body
 
@@ -110,7 +110,7 @@ router.post('/', validateScheme, (req, res, next) => {
     .catch(next)
 })
 
-/*
+/*===================================================================================
   [POST] /api/schemes/5/steps { "instructions": "and yet more questing", "step_number": 2 }
 
   response:
@@ -128,7 +128,7 @@ router.post('/', validateScheme, (req, res, next) => {
       "scheme_name": "Find the Holy Grail"
     }
   ]
-*/
+   ======================================================================================*/
 router.post('/:scheme_id/steps', checkSchemeId, validateStep, (req, res, next) => {
   const step = req.body
   const { scheme_id } = req.params
